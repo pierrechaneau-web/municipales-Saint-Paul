@@ -70,13 +70,35 @@
                 </div>
             </div>
 
-            <!-- Carré Noir (Calculs) -->
-            <div class="bg-slate-900 rounded-2xl p-5 text-[11px] font-mono text-slate-300 space-y-3">
-                <p class="text-blue-400 font-bold border-b border-slate-700 pb-2">DÉTAIL DU CALCUL</p>
-                <p id="logExprime" class="flex justify-between"><span>Suffrages exprimés :</span> <span class="text-white font-bold" id="valEx">0</span></p>
-                <p id="logPrime" class="text-slate-400 italic"></p>
-                <p id="logQuotient" class="text-slate-400 italic"></p>
-                <div id="logMoy" class="pt-2 border-t border-slate-800 text-white font-bold space-y-1"></div>
+            <!-- Carré Noir (Calculs détaillés) -->
+            <div class="bg-slate-900 rounded-2xl p-5 text-[11px] font-mono text-slate-300 space-y-3 shadow-inner">
+                <p class="text-blue-400 font-bold border-b border-slate-700 pb-2 uppercase tracking-tighter">Détail des opérations</p>
+                
+                <div class="space-y-1">
+                    <p class="text-slate-500 uppercase text-[9px] font-bold">1. Suffrages</p>
+                    <p class="flex justify-between items-center bg-slate-800/50 p-2 rounded">
+                        <span>Total exprimés :</span>
+                        <span class="text-white font-bold" id="valEx">0</span>
+                    </p>
+                </div>
+
+                <div class="space-y-1">
+                    <p class="text-slate-500 uppercase text-[9px] font-bold">2. Prime majoritaire (50%)</p>
+                    <p id="logPrime" class="bg-slate-800/50 p-2 rounded text-white"></p>
+                </div>
+
+                <div class="space-y-1">
+                    <p class="text-slate-500 uppercase text-[9px] font-bold">3. Quotient (Calcul proportionnel)</p>
+                    <div class="bg-slate-800/50 p-2 rounded space-y-1">
+                        <p id="formulaQuotient" class="text-blue-300 font-bold"></p>
+                        <p id="logQuotient" class="text-white"></p>
+                    </div>
+                </div>
+
+                <div class="space-y-1 pt-1">
+                    <p class="text-slate-500 uppercase text-[9px] font-bold">4. Attribution à la moyenne</p>
+                    <div id="logMoy" class="bg-slate-800/50 p-2 rounded text-white space-y-2 border-l-2 border-blue-500"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -97,16 +119,22 @@
 
             document.getElementById('valEx').innerText = ex;
             const winner = (vA >= vB) ? "A" : "B";
+            
+            // État initial des sièges
             let sA = (winner === "A") ? 6 : 0;
             let sB = (winner === "B") ? 6 : 0;
 
-            document.getElementById('logPrime').innerText = "• Prime majoritaire : 6 sièges à la Liste " + winner;
+            document.getElementById('logPrime').innerText = "• Liste " + winner + " gagne : 6 sièges";
 
+            // Calcul du quotient
             const quotient = ex / 5;
-            document.getElementById('logQuotient').innerText = "• Quotient (1 siège) : " + quotient.toFixed(2) + " voix";
-
+            document.getElementById('formulaQuotient').innerText = ex + " voix / 5 places = " + quotient.toFixed(2);
+            
             let pA = Math.floor(vA / quotient);
             let pB = Math.floor(vB / quotient);
+            
+            document.getElementById('logQuotient').innerText = "A: " + pA + " siège(s) | B: " + pB + " siège(s)";
+
             sA += pA;
             sB += pB;
 
@@ -114,23 +142,41 @@
             const logMoy = document.getElementById('logMoy');
             logMoy.innerHTML = "";
 
+            if (reste === 0) {
+                logMoy.innerHTML = "<p class='italic text-slate-500'>Aucun siège restant à la moyenne.</p>";
+            }
+
             while (reste > 0) {
+                // Calcul de la moyenne : voix / (sièges déjà acquis + 1)
                 const mA = vA / (sA + 1);
                 const mB = vB / (sB + 1);
+                
+                let details = "<div class='text-[10px] space-y-1'>";
+                details += "<p class='text-slate-400'>Calcul Moyenne :</p>";
+                details += "<p>A: " + vA + " / (" + sA + "+1) = <span class='text-blue-400'>" + mA.toFixed(2) + "</span></p>";
+                details += "<p>B: " + vB + " / (" + sB + "+1) = <span class='text-rose-400'>" + mB.toFixed(2) + "</span></p>";
+                
                 if (mA >= mB) {
                     sA++;
-                    logMoy.innerHTML += "<p>• Dernier siège à Liste A (Moy: " + mA.toFixed(1) + ")</p>";
+                    details += "<p class='font-bold text-green-400'>→ Liste A gagne le siège</p>";
                 } else {
                     sB++;
-                    logMoy.innerHTML += "<p>• Dernier siège à Liste B (Moy: " + mB.toFixed(1) + ")</p>";
+                    details += "<p class='font-bold text-green-400'>→ Liste B gagne le siège</p>";
                 }
+                details += "</div>";
+                
+                logMoy.innerHTML += details;
                 reste--;
             }
 
             document.getElementById('resA').innerText = sA;
             document.getElementById('resB').innerText = sB;
             document.getElementById('resultats').classList.remove('hidden');
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            
+            // Scroll automatique vers les résultats
+            setTimeout(() => {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }, 100);
         }
     </script>
 </body>
