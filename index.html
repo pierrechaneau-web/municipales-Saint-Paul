@@ -9,12 +9,12 @@
         body { background-color: #f1f5f9; font-family: system-ui, -apple-system, sans-serif; }
         .card { background: white; border-radius: 24px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-        input[type=number] { -moz-appearance: textfield; }
+        input[type=number] { -moz-appearance: textfield; border: 1px solid #e2e8f0; }
         .glass-blue { background: rgba(239, 246, 255, 0.6); border: 1px solid #dbeafe; }
         .glass-rose { background: rgba(255, 241, 242, 0.6); border: 1px solid #ffe4e6; }
     </style>
 </head>
-<body class="p-4 md:p-10 flex justify-center items-start min-h-screen">
+<body class="p-4 md:p-10 flex justify-center items-start min-h-screen text-slate-900">
 
     <div class="w-full max-w-md card p-6 md:p-8">
         <!-- Entête -->
@@ -23,23 +23,23 @@
                 <h1 class="text-2xl font-black text-slate-900 tracking-tight">
                     🗳️ MUNICIPALES 2026
                 </h1>
-                <p class="text-blue-600 text-xs font-bold uppercase tracking-widest mt-1">Saint-Paul (65) • 11 Élus</p>
+                <p class="text-blue-600 text-[10px] font-bold uppercase tracking-widest mt-1">Saint-Paul (65) • 11 Élus</p>
             </div>
-            <button onclick="resetForm()" class="p-3 hover:bg-slate-100 rounded-full text-slate-400 hover:text-red-500 transition-all active:rotate-180 duration-500" title="Remise à zéro">
+            <button onclick="resetForm()" class="p-3 hover:bg-slate-100 rounded-full text-slate-400 hover:text-blue-600 transition-all active:rotate-180 duration-500" title="Remise à zéro">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
             </button>
         </div>
 
         <div class="space-y-6">
-            <!-- Participation (Alignement corrigé) -->
+            <!-- Participation -->
             <div class="grid grid-cols-2 gap-4">
                 <div class="flex flex-col">
                     <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Nb Votants</label>
-                    <input type="number" id="votants" placeholder="0" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none text-xl font-bold text-slate-800 transition-all">
+                    <input type="number" id="votants" placeholder="0" class="w-full p-4 bg-slate-50 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none text-xl font-bold text-slate-800 transition-all">
                 </div>
                 <div class="flex flex-col">
                     <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Nb Blancs/Nuls</label>
-                    <input type="number" id="nuls" placeholder="0" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none text-xl font-bold text-slate-800 transition-all">
+                    <input type="number" id="nuls" placeholder="0" class="w-full p-4 bg-slate-50 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none text-xl font-bold text-slate-800 transition-all">
                 </div>
             </div>
 
@@ -50,12 +50,12 @@
 
             <!-- Listes -->
             <div class="grid grid-cols-2 gap-4 pt-2">
-                <div class="p-5 glass-blue rounded-3xl">
-                    <label class="block text-[10px] font-black text-blue-600 uppercase mb-3 tracking-widest text-center">LISTE A</label>
+                <div class="p-5 glass-blue rounded-3xl text-center">
+                    <label class="block text-[10px] font-black text-blue-600 uppercase mb-3 tracking-widest">LISTE A</label>
                     <input type="number" id="voixA" placeholder="0" class="w-full text-4xl font-black bg-transparent outline-none text-blue-900 placeholder:text-blue-200 text-center">
                 </div>
-                <div class="p-5 glass-rose rounded-3xl">
-                    <label class="block text-[10px] font-black text-rose-600 uppercase mb-3 tracking-widest text-center">LISTE B</label>
+                <div class="p-5 glass-rose rounded-3xl text-center">
+                    <label class="block text-[10px] font-black text-rose-600 uppercase mb-3 tracking-widest">LISTE B</label>
                     <input type="number" id="voixB" placeholder="0" class="w-full text-4xl font-black bg-transparent outline-none text-rose-900 placeholder:text-rose-200 text-center">
                 </div>
             </div>
@@ -69,7 +69,7 @@
         <div id="resultats" class="mt-12 hidden space-y-8 animate-in slide-in-from-bottom duration-700">
             <div class="relative flex items-center">
                 <div class="flex-grow border-t border-slate-200"></div>
-                <span class="flex-shrink mx-4 text-slate-400 text-[10px] font-black uppercase tracking-[0.3em]">SIÈGES ATTRIBUÉS</span>
+                <span class="flex-shrink mx-4 text-slate-400 text-[10px] font-black uppercase tracking-[0.3em]">RÉSULTAT DU SCRUTIN</span>
                 <div class="flex-grow border-t border-slate-200"></div>
             </div>
             
@@ -77,31 +77,41 @@
                 <div class="text-center p-6 bg-white border-2 border-blue-600 rounded-[2.5rem] shadow-xl shadow-blue-50">
                     <p class="text-[11px] font-black text-blue-800 mb-1 tracking-widest">LISTE A</p>
                     <div id="resA" class="text-6xl font-black text-blue-600 tracking-tighter">0</div>
-                    <p class="text-[10px] text-slate-400 mt-2 uppercase font-bold">Élus</p>
+                    <p class="text-[10px] text-slate-400 mt-2 uppercase font-bold text-center">Élus</p>
                 </div>
                 <div class="text-center p-6 bg-white border-2 border-rose-600 rounded-[2.5rem] shadow-xl shadow-rose-50">
                     <p class="text-[11px] font-black text-rose-800 mb-1 tracking-widest">LISTE B</p>
                     <div id="resB" class="text-6xl font-black text-rose-600 tracking-tighter">0</div>
-                    <p class="text-[10px] text-slate-400 mt-2 uppercase font-bold">Élus</p>
+                    <p class="text-[10px] text-slate-400 mt-2 uppercase font-bold text-center">Élus</p>
                 </div>
             </div>
 
-            <!-- Procès-Verbal -->
-            <div class="bg-slate-900 rounded-[2rem] p-7 text-[11px] font-mono text-slate-400 space-y-4 shadow-2xl">
+            <!-- Procès-Verbal Détaillé (Carré Noir) -->
+            <div class="bg-slate-900 rounded-[2rem] p-6 text-[11px] font-mono text-slate-400 space-y-5 shadow-2xl">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                    <span class="text-blue-400 font-black uppercase tracking-widest">DÉTAIL LÉGAL</span>
-                    <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-[9px] font-bold">MODE : SCRUTIN DE LISTE</span>
+                    <span class="text-blue-400 font-black uppercase tracking-widest">DÉTAILS DU CALCUL</span>
                 </div>
-                <div class="space-y-2.5">
-                    <p class="flex items-start gap-2 italic">
-                        <span class="text-green-400">✓</span> 
-                        <span>Prime majoritaire (50%) : <b class="text-slate-100">6 sièges</b> pour le vainqueur.</span>
-                    </p>
-                    <p class="flex items-start gap-2">
-                        <span class="text-blue-400">ℹ</span> 
-                        <span>Seuil d'exclusion (5%) : <b id="logSeuil" class="text-slate-100">...</b></span>
-                    </p>
-                    <div id="logMoy" class="bg-slate-800 p-3 rounded-xl mt-2 text-slate-200 leading-relaxed border-l-4 border-blue-500"></div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <p class="text-slate-100 font-bold mb-1 underline decoration-blue-500 underline-offset-4">1. Prime Majoritaire (50%)</p>
+                        <p id="logPrime" class="text-slate-300 ml-2"></p>
+                    </div>
+
+                    <div>
+                        <p class="text-slate-100 font-bold mb-1 underline decoration-blue-500 underline-offset-4">2. Seuil d'éligibilité (5%)</p>
+                        <p id="logSeuil" class="text-slate-300 ml-2"></p>
+                    </div>
+
+                    <div>
+                        <p class="text-slate-100 font-bold mb-1 underline decoration-blue-500 underline-offset-4">3. Répartition proportionnelle</p>
+                        <p id="logProp" class="text-slate-300 ml-2"></p>
+                    </div>
+
+                    <div>
+                        <p class="text-slate-100 font-bold mb-1 underline decoration-blue-500 underline-offset-4">4. Sièges à la Forte Moyenne</p>
+                        <div id="logMoy" class="text-slate-300 ml-2 space-y-1"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -135,15 +145,18 @@
             let finalA = 0;
             let finalB = 0;
 
+            // 1. PRIME
             const vainqueur = (vA >= vB) ? "A" : "B";
             if (vainqueur === "A") finalA = prime; else finalB = prime;
+            document.getElementById('logPrime').innerText = `• Liste ${vainqueur} en tête : +${prime} sièges d'office.`;
 
+            // 2. SEUIL 5%
             const seuil = exprimes * 0.05;
             const eligA = vA >= seuil;
             const eligB = vB >= seuil;
-            
-            document.getElementById('logSeuil').innerText = `${seuil.toFixed(1)} voix nécessaires.`;
+            document.getElementById('logSeuil').innerText = `• Seuil : ${seuil.toFixed(1)} voix requis. (A: ${eligA?'Admise':'Écartée'} | B: ${eligB?'Admise':'Écartée'})`;
 
+            // 3. PROPORTIONNELLE
             const siegesRestants = 5;
             const quotient = exprimes / siegesRestants;
             
@@ -152,25 +165,33 @@
             
             finalA += propA;
             finalB += propB;
+            document.getElementById('logProp').innerText = `• 1 siège = ${quotient.toFixed(2)} voix. (A: +${propA} | B: +${propB} sièges)`;
 
+            // 4. MOYENNE
             let distribues = prime + propA + propB;
-            let detailsMoy = "Répartition complémentaire : ";
+            const logMoyDiv = document.getElementById('logMoy');
+            logMoyDiv.innerHTML = "";
             
+            if (distribues >= totalSieges) {
+                logMoyDiv.innerHTML = "<p>• Tous les sièges sont déjà attribués.</p>";
+            }
+
             while (distribues < totalSieges) {
                 const moyA = eligA ? (vA / (finalA + 1)) : 0;
                 const moyB = eligB ? (vB / (finalB + 1)) : 0;
 
+                const p = document.createElement("p");
                 if (moyA >= moyB) {
                     finalA++;
-                    detailsMoy += "Dernière place à la Liste A. ";
+                    p.innerText = `• Siège n°${distribues+1} à Liste A (Moy: ${moyA.toFixed(1)} vs ${moyB.toFixed(1)})`;
                 } else {
                     finalB++;
-                    detailsMoy += "Dernière place à la Liste B. ";
+                    p.innerText = `• Siège n°${distribues+1} à Liste B (Moy: ${moyB.toFixed(1)} vs ${moyA.toFixed(1)})`;
                 }
+                logMoyDiv.appendChild(p);
                 distribues++;
             }
 
-            document.getElementById('logMoy').innerText = detailsMoy;
             document.getElementById('resA').innerText = finalA;
             document.getElementById('resB').innerText = finalB;
             document.getElementById('resultats').classList.remove('hidden');
