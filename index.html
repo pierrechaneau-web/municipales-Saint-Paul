@@ -3,126 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulateur Municipales 2026 - Saint-Paul</title>
+    <title>Simulateur 2026 - Saint-Paul</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #f1f5f9; font-family: system-ui, -apple-system, sans-serif; }
-        .card { background: white; border-radius: 24px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+        .card { background: white; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-        input[type=number] { -moz-appearance: textfield; border: 1px solid #e2e8f0; }
-        .glass-blue { background: rgba(239, 246, 255, 0.6); border: 1px solid #dbeafe; }
-        .glass-rose { background: rgba(255, 241, 242, 0.6); border: 1px solid #ffe4e6; }
+        .glass { background: rgba(248, 250, 252, 0.8); border: 1px solid #e2e8f0; }
     </style>
 </head>
-<body class="p-4 md:p-10 flex justify-center items-start min-h-screen text-slate-900">
+<body class="p-4 flex justify-center items-start min-h-screen">
 
-    <div class="w-full max-w-md card p-6 md:p-8">
+    <div class="w-full max-w-md card p-6 mt-4">
         <!-- Entête -->
-        <div class="flex items-center justify-between mb-8 border-b border-slate-100 pb-6">
+        <div class="flex items-center justify-between mb-6 border-b pb-4">
             <div>
-                <h1 class="text-2xl font-black text-slate-900 tracking-tight">
-                    🗳️ MUNICIPALES 2026
-                </h1>
-                <p class="text-blue-600 text-[10px] font-bold uppercase tracking-widest mt-1">Saint-Paul (65) • 11 Élus</p>
+                <h1 class="text-xl font-black text-slate-900">🗳️ MUNICIPALES 2026</h1>
+                <p class="text-blue-600 text-[10px] font-bold uppercase tracking-widest">Saint-Paul • 11 Élus</p>
             </div>
-            <button onclick="resetForm()" class="p-3 hover:bg-slate-100 rounded-full text-slate-400 hover:text-red-500 transition-all active:rotate-180 duration-500" title="Remise à zéro">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            <button onclick="resetForm()" class="p-2 text-slate-400 hover:text-red-500">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
             </button>
         </div>
 
-        <div class="space-y-6">
-            <!-- Participation (Alignement optimisé mobile) -->
-            <div class="grid grid-cols-2 gap-4">
+        <!-- Saisie -->
+        <div class="space-y-4">
+            <div class="grid grid-cols-2 gap-3">
                 <div class="flex flex-col">
-                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Nb Votants</label>
-                    <input type="number" id="votants" placeholder="0" class="w-full p-4 bg-slate-50 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none text-xl font-bold text-slate-800 transition-all">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase mb-1">Votants</label>
+                    <input type="number" id="votants" placeholder="0" class="w-full p-3 bg-slate-50 rounded-xl outline-none border border-slate-200 font-bold">
                 </div>
                 <div class="flex flex-col">
-                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Nb Blancs/Nuls</label>
-                    <input type="number" id="nuls" placeholder="0" class="w-full p-4 bg-slate-50 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none text-xl font-bold text-slate-800 transition-all">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase mb-1">Blancs/Nuls</label>
+                    <input type="number" id="nuls" placeholder="0" class="w-full p-3 bg-slate-50 rounded-xl outline-none border border-slate-200 font-bold">
                 </div>
             </div>
 
-            <div id="exprimésZone" class="hidden py-3 px-5 bg-blue-600 rounded-2xl text-white text-sm font-bold flex justify-between items-center shadow-lg shadow-blue-200">
-                <span class="opacity-80 uppercase text-[10px]">Suffrages exprimés</span>
-                <span id="valExprimés" class="text-xl font-black tracking-tighter">0</span>
-            </div>
-
-            <!-- Listes -->
-            <div class="grid grid-cols-2 gap-4 pt-2">
-                <div class="p-5 glass-blue rounded-3xl text-center">
-                    <label class="block text-[10px] font-black text-blue-600 uppercase mb-3 tracking-widest">LISTE A</label>
-                    <input type="number" id="voixA" placeholder="0" class="w-full text-4xl font-black bg-transparent outline-none text-blue-900 placeholder:text-blue-200 text-center">
+            <div class="grid grid-cols-2 gap-3">
+                <div class="p-4 glass rounded-2xl text-center">
+                    <label class="block text-[9px] font-black text-blue-600 uppercase mb-1">Liste A</label>
+                    <input type="number" id="voixA" placeholder="0" class="w-full text-2xl font-black bg-transparent outline-none text-blue-900 text-center">
                 </div>
-                <div class="p-5 glass-rose rounded-3xl text-center">
-                    <label class="block text-[10px] font-black text-rose-600 uppercase mb-3 tracking-widest">LISTE B</label>
-                    <input type="number" id="voixB" placeholder="0" class="w-full text-4xl font-black bg-transparent outline-none text-rose-900 placeholder:text-rose-200 text-center">
+                <div class="p-4 glass rounded-2xl text-center">
+                    <label class="block text-[9px] font-black text-rose-600 uppercase mb-1">Liste B</label>
+                    <input type="number" id="voixB" placeholder="0" class="w-full text-2xl font-black bg-transparent outline-none text-rose-900 text-center">
                 </div>
             </div>
 
-            <button onclick="calculer()" class="w-full py-5 bg-slate-900 hover:bg-blue-700 text-white font-black rounded-2xl transition-all shadow-xl active:scale-[0.96] tracking-widest uppercase text-xs mt-4">
-                Calculer la Répartition
+            <button onclick="calculer()" class="w-full py-4 bg-slate-900 text-white font-black rounded-xl shadow-lg active:scale-95 transition-all uppercase text-xs tracking-widest">
+                Calculer la répartition
             </button>
         </div>
 
         <!-- Résultats -->
-        <div id="resultats" class="mt-12 hidden space-y-8 animate-in slide-in-from-bottom duration-700">
-            <div class="relative flex items-center">
-                <div class="flex-grow border-t border-slate-200"></div>
-                <span class="flex-shrink mx-4 text-slate-400 text-[10px] font-black uppercase tracking-[0.3em]">SIÈGES ATTRIBUÉS</span>
-                <div class="flex-grow border-t border-slate-200"></div>
-            </div>
-            
-            <div class="grid grid-cols-2 gap-4">
-                <div class="text-center p-6 bg-white border-2 border-blue-600 rounded-[2.5rem] shadow-xl shadow-blue-50">
-                    <p class="text-[11px] font-black text-blue-800 mb-1 tracking-widest">LISTE A</p>
-                    <div id="resA" class="text-6xl font-black text-blue-600 tracking-tighter">0</div>
-                    <p class="text-[10px] text-slate-400 mt-2 uppercase font-bold text-center">Élus</p>
+        <div id="resultats" class="mt-8 hidden animate-in fade-in">
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div class="text-center p-4 bg-blue-50 border-2 border-blue-500 rounded-3xl">
+                    <p class="text-[9px] font-bold text-blue-800 uppercase">Liste A</p>
+                    <div id="resA" class="text-5xl font-black text-blue-600">0</div>
+                    <p class="text-[9px] text-slate-400 font-bold uppercase">Sièges</p>
                 </div>
-                <div class="text-center p-6 bg-white border-2 border-rose-600 rounded-[2.5rem] shadow-xl shadow-rose-50">
-                    <p class="text-[11px] font-black text-rose-800 mb-1 tracking-widest">LISTE B</p>
-                    <div id="resB" class="text-6xl font-black text-rose-600 tracking-tighter">0</div>
-                    <p class="text-[10px] text-slate-400 mt-2 uppercase font-bold text-center">Élus</p>
+                <div class="text-center p-4 bg-rose-50 border-2 border-rose-500 rounded-3xl">
+                    <p class="text-[9px] font-bold text-rose-800 uppercase">Liste B</p>
+                    <div id="resB" class="text-5xl font-black text-rose-600">0</div>
+                    <p class="text-[9px] text-slate-400 font-bold uppercase">Sièges</p>
                 </div>
             </div>
 
-            <!-- Carré Noir : Explications simplifiées -->
-            <div class="bg-slate-900 rounded-[2rem] p-6 text-[11px] font-mono text-slate-400 space-y-4 shadow-2xl">
-                <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                    <span class="text-blue-400 font-black uppercase tracking-widest">DÉCRYPTAGE DU CALCUL</span>
-                </div>
-                
-                <div class="space-y-3">
-                    <div class="flex gap-3">
-                        <span class="text-white font-bold">1. Prime :</span>
-                        <p id="logPrime" class="text-slate-300"></p>
-                    </div>
-                    <div class="flex gap-3">
-                        <span class="text-white font-bold">2. Seuil :</span>
-                        <p id="logSeuil" class="text-slate-300"></p>
-                    </div>
-                    <div class="flex gap-3 border-t border-slate-800 pt-3">
-                        <span class="text-white font-bold">3. Prix Siège :</span>
-                        <p id="logQuotient" class="text-slate-300"></p>
-                    </div>
-                    <div class="bg-slate-800 p-3 rounded-xl mt-1">
-                        <p class="text-blue-400 font-bold mb-1 uppercase text-[9px]">4. Attribution Finale :</p>
-                        <div id="logMoy" class="text-slate-300 space-y-1"></div>
-                    </div>
-                </div>
+            <!-- Carré Noir (Calculs) -->
+            <div class="bg-slate-900 rounded-2xl p-5 text-[11px] font-mono text-slate-300 space-y-3">
+                <p class="text-blue-400 font-bold border-b border-slate-700 pb-2">DÉTAIL DU CALCUL</p>
+                <p id="logExprime" class="flex justify-between"><span>Suffrages exprimés :</span> <span class="text-white font-bold" id="valEx">0</span></p>
+                <p id="logPrime" class="text-slate-400 italic"></p>
+                <p id="logQuotient" class="text-slate-400 italic"></p>
+                <div id="logMoy" class="pt-2 border-t border-slate-800 text-white font-bold space-y-1"></div>
             </div>
         </div>
     </div>
 
     <script>
         function resetForm() {
-            document.getElementById('votants').value = '';
-            document.getElementById('nuls').value = '';
-            document.getElementById('voixA').value = '';
-            document.getElementById('voixB').value = '';
-            document.getElementById('resultats').classList.add('hidden');
-            document.getElementById('exprimésZone').classList.add('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            location.reload();
         }
 
         function calculer() {
@@ -130,72 +91,46 @@
             const n = parseInt(document.getElementById('nuls').value) || 0;
             const vA = parseInt(document.getElementById('voixA').value) || 0;
             const vB = parseInt(document.getElementById('voixB').value) || 0;
-            
-            const exprimes = v - n;
-            if (exprimes <= 0 || (vA + vB) === 0) return;
+            const ex = v - n;
 
-            document.getElementById('valExprimés').innerText = exprimes;
-            document.getElementById('exprimésZone').classList.remove('hidden');
+            if (ex <= 0 || (vA + vB) === 0) return;
 
-            const totalSieges = 11;
-            const prime = 6;
-            let finalA = 0;
-            let finalB = 0;
+            document.getElementById('valEx').innerText = ex;
+            const winner = (vA >= vB) ? "A" : "B";
+            let sA = (winner === "A") ? 6 : 0;
+            let sB = (winner === "B") ? 6 : 0;
 
-            // 1. PRIME
-            const vainqueur = (vA >= vB) ? "A" : "B";
-            if (vainqueur === "A") finalA = prime; else finalB = prime;
-            document.getElementById('logPrime').innerText = `Liste ${vainqueur} en tête (+${prime} sièges).`;
+            document.getElementById('logPrime').innerText = "• Prime majoritaire : 6 sièges à la Liste " + winner;
 
-            // 2. SEUIL
-            const seuil = exprimes * 0.05;
-            const eligA = vA >= seuil;
-            const eligB = vB >= seuil;
-            document.getElementById('logSeuil').innerText = `${seuil.toFixed(1)} voix (5%). A: ${eligA?'Oui':'Non'} | B: ${eligB?'Oui':'Non'}`;
+            const quotient = ex / 5;
+            document.getElementById('logQuotient').innerText = "• Quotient (1 siège) : " + quotient.toFixed(2) + " voix";
 
-            // 3. QUOTIENT
-            const siegesRestants = 5;
-            const quotient = exprimes / siegesRestants;
-            document.getElementById('logQuotient').innerText = `${quotient.toFixed(2)} voix par siège.`;
-            
-            let propA = eligA ? Math.floor(vA / quotient) : 0;
-            let propB = eligB ? Math.floor(vB / quotient) : 0;
-            
-            finalA += propA;
-            finalB += propB;
+            let pA = Math.floor(vA / quotient);
+            let pB = Math.floor(vB / quotient);
+            sA += pA;
+            sB += pB;
 
-            // 4. FORTE MOYENNE
-            let distribues = prime + propA + propB;
-            const logMoyDiv = document.getElementById('logMoy');
-            logMoyDiv.innerHTML = "";
-            
-            if (distribues >= totalSieges) {
-                logMoyDiv.innerHTML = "<p>• Tous les sièges sont pourvus.</p>";
-            }
+            let reste = 11 - (sA + sB);
+            const logMoy = document.getElementById('logMoy');
+            logMoy.innerHTML = "";
 
-            while (distribues < totalSieges) {
-                const moyA = eligA ? (vA / (finalA + 1)) : 0;
-                const moyB = eligB ? (vB / (finalB + 1)) : 0;
-
-                const p = document.createElement("p");
-                if (moyA >= moyB) {
-                    finalA++;
-                    p.innerHTML = `<span class="text-white">✓ A</span> prend le siège (Moy: ${moyA.toFixed(1)} > ${moyB.toFixed(1)})`;
+            while (reste > 0) {
+                const mA = vA / (sA + 1);
+                const mB = vB / (sB + 1);
+                if (mA >= mB) {
+                    sA++;
+                    logMoy.innerHTML += "<p>• Dernier siège à Liste A (Moy: " + mA.toFixed(1) + ")</p>";
                 } else {
-                    finalB++;
-                    p.innerHTML = `<span class="text-white">✓ B</span> prend le siège (Moy: ${moyB.toFixed(1)} > ${moyA.toFixed(1)})`;
+                    sB++;
+                    logMoy.innerHTML += "<p>• Dernier siège à Liste B (Moy: " + mB.toFixed(1) + ")</p>";
                 }
-                logMoyDiv.appendChild(p);
-                distribues++;
+                reste--;
             }
 
-            document.getElementById('resA').innerText = finalA;
-            document.getElementById('resB').innerText = finalB;
+            document.getElementById('resA').innerText = sA;
+            document.getElementById('resB').innerText = sB;
             document.getElementById('resultats').classList.remove('hidden');
-            
-            setTimeout(() => {
-                document.getElementById('resultats').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 100);
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }
     </script>
 </body>
