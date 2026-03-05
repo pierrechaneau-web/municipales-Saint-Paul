@@ -71,7 +71,7 @@
         </div>
 
         <!-- Résultats -->
-        <div id="resultats" class="mt-8 hidden space-y-6">
+        <div id="resultats" class="mt-8 hidden space-y-6 text-slate-900">
             <div class="grid grid-cols-2 gap-4">
                 <div class="text-center p-6 bg-blue-50 border-2 border-blue-500 rounded-[2.5rem] shadow-sm">
                     <p class="text-[10px] font-black text-blue-800 uppercase mb-1 tracking-wider text-center w-full">Liste A</p>
@@ -91,7 +91,7 @@
                     <span class="text-blue-400 font-black uppercase tracking-widest text-[9px]">Détail du calcul officiel</span>
                 </div>
 
-                <div class="space-y-5">
+                <div class="space-y-5 text-slate-400">
                     <!-- Étape 1 -->
                     <div>
                         <p class="text-slate-100 font-bold mb-1 uppercase text-[9px] tracking-wider">1. Prime majoritaire</p>
@@ -190,9 +190,6 @@
                 detail += "<p class='text-blue-400 font-bold'>Détail siège n°" + (11 - reste + 1) + " :</p>";
                 detail += "<p class='flex justify-between'><span>Moy. A: " + vA + " / (" + pCountA + "+1) =</span> <span class='text-white font-bold'>" + moyA.toFixed(2) + "</span></p>";
                 detail += "<p class='flex justify-between'><span>Moy. B: " + vB + " / (" + pCountB + "+1) =</span> <span class='text-white font-bold'>" + moyB.toFixed(2) + "</span></p>";
-                
-                if (mA >= mB) { // mA and mB were not defined, fixed to moyA/moyB
-                }
                 
                 if (moyA >= moyB) {
                     finalA++;
