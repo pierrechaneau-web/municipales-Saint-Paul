@@ -16,88 +16,87 @@
 
     <div class="w-full max-w-md card p-6 mt-4">
         <!-- Entête -->
-        <div class="flex items-center justify-between mb-6 border-b pb-4">
+        <div class="flex items-center justify-between mb-6 border-b pb-4 text-slate-900">
             <div>
-                <h1 class="text-xl font-black text-slate-900">🗳️ MUNICIPALES 2026</h1>
-                <p class="text-blue-600 text-[10px] font-bold uppercase tracking-widest">Saint-Paul • 11 Élus</p>
+                <h1 class="text-xl font-black italic">🗳️ MUNICIPALES 2026</h1>
+                <p class="text-blue-600 text-[10px] font-bold uppercase tracking-widest">Saint-Paul (65) • 11 Élus</p>
             </div>
-            <button onclick="resetForm()" class="p-2 text-slate-400 hover:text-red-500">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            <button onclick="resetForm()" class="p-2 text-slate-400 hover:text-red-500 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
             </button>
         </div>
 
-        <!-- Saisie -->
+        <!-- Saisie des voix -->
         <div class="space-y-4">
             <div class="grid grid-cols-2 gap-3">
                 <div class="flex flex-col">
-                    <label class="text-[10px] font-bold text-slate-400 uppercase mb-1">Votants</label>
-                    <input type="number" id="votants" placeholder="0" class="w-full p-3 bg-slate-50 rounded-xl outline-none border border-slate-200 font-bold">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase mb-1 ml-1">Votants</label>
+                    <input type="number" id="votants" placeholder="0" class="w-full p-3 bg-slate-50 rounded-xl outline-none border border-slate-200 font-bold text-slate-800 focus:border-blue-500 transition-all">
                 </div>
                 <div class="flex flex-col">
-                    <label class="text-[10px] font-bold text-slate-400 uppercase mb-1">Blancs/Nuls</label>
-                    <input type="number" id="nuls" placeholder="0" class="w-full p-3 bg-slate-50 rounded-xl outline-none border border-slate-200 font-bold">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase mb-1 ml-1">Blancs/Nuls</label>
+                    <input type="number" id="nuls" placeholder="0" class="w-full p-3 bg-slate-50 rounded-xl outline-none border border-slate-200 font-bold text-slate-800 focus:border-blue-500 transition-all">
                 </div>
             </div>
 
             <div class="grid grid-cols-2 gap-3">
                 <div class="p-4 glass rounded-2xl text-center">
-                    <label class="block text-[9px] font-black text-blue-600 uppercase mb-1">Liste A</label>
-                    <input type="number" id="voixA" placeholder="0" class="w-full text-2xl font-black bg-transparent outline-none text-blue-900 text-center">
+                    <label class="block text-[9px] font-black text-blue-600 uppercase mb-1 tracking-tighter">Liste A</label>
+                    <input type="number" id="voixA" placeholder="0" class="w-full text-3xl font-black bg-transparent outline-none text-blue-900 text-center placeholder:text-blue-200">
                 </div>
                 <div class="p-4 glass rounded-2xl text-center">
-                    <label class="block text-[9px] font-black text-rose-600 uppercase mb-1">Liste B</label>
-                    <input type="number" id="voixB" placeholder="0" class="w-full text-2xl font-black bg-transparent outline-none text-rose-900 text-center">
+                    <label class="block text-[9px] font-black text-rose-600 uppercase mb-1 tracking-tighter">Liste B</label>
+                    <input type="number" id="voixB" placeholder="0" class="w-full text-3xl font-black bg-transparent outline-none text-rose-900 text-center placeholder:text-rose-200">
                 </div>
             </div>
 
-            <button onclick="calculer()" class="w-full py-4 bg-slate-900 text-white font-black rounded-xl shadow-lg active:scale-95 transition-all uppercase text-xs tracking-widest">
+            <button onclick="calculer()" class="w-full py-5 bg-slate-900 text-white font-black rounded-2xl shadow-xl active:scale-95 transition-all uppercase text-xs tracking-widest hover:bg-blue-700">
                 Calculer la répartition
             </button>
         </div>
 
         <!-- Résultats -->
-        <div id="resultats" class="mt-8 hidden animate-in fade-in">
-            <div class="grid grid-cols-2 gap-4 mb-6">
-                <div class="text-center p-4 bg-blue-50 border-2 border-blue-500 rounded-3xl">
-                    <p class="text-[9px] font-bold text-blue-800 uppercase">Liste A</p>
-                    <div id="resA" class="text-5xl font-black text-blue-600">0</div>
-                    <p class="text-[9px] text-slate-400 font-bold uppercase">Sièges</p>
+        <div id="resultats" class="mt-8 hidden space-y-6">
+            <div class="grid grid-cols-2 gap-4">
+                <div class="text-center p-5 bg-blue-50 border-2 border-blue-500 rounded-[2rem] shadow-sm">
+                    <p class="text-[10px] font-black text-blue-800 uppercase mb-1">Liste A</p>
+                    <div id="resA" class="text-6xl font-black text-blue-600 tracking-tighter">0</div>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase">Sièges</p>
                 </div>
-                <div class="text-center p-4 bg-rose-50 border-2 border-rose-500 rounded-3xl">
-                    <p class="text-[9px] font-bold text-rose-800 uppercase">Liste B</p>
-                    <div id="resB" class="text-5xl font-black text-rose-600">0</div>
-                    <p class="text-[9px] text-slate-400 font-bold uppercase">Sièges</p>
+                <div class="text-center p-5 bg-rose-50 border-2 border-rose-500 rounded-[2rem] shadow-sm">
+                    <p class="text-[10px] font-black text-rose-800 uppercase mb-1">Liste B</p>
+                    <div id="resB" class="text-6xl font-black text-rose-600 tracking-tighter">0</div>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase">Sièges</p>
                 </div>
             </div>
 
-            <!-- Carré Noir (Calculs détaillés) -->
-            <div class="bg-slate-900 rounded-2xl p-5 text-[11px] font-mono text-slate-300 space-y-3 shadow-inner">
-                <p class="text-blue-400 font-bold border-b border-slate-700 pb-2 uppercase tracking-tighter">Détail des opérations</p>
+            <!-- Carré Noir (Calculs détaillés selon Préfecture) -->
+            <div class="bg-slate-900 rounded-[2rem] p-6 text-[11px] font-mono text-slate-400 space-y-4 shadow-2xl">
+                <p class="text-blue-400 font-bold border-b border-slate-700 pb-2 uppercase text-[9px] tracking-widest">Détail des opérations</p>
                 
-                <div class="space-y-1">
-                    <p class="text-slate-500 uppercase text-[9px] font-bold">1. Suffrages</p>
-                    <p class="flex justify-between items-center bg-slate-800/50 p-2 rounded">
-                        <span>Total exprimés :</span>
-                        <span class="text-white font-bold" id="valEx">0</span>
-                    </p>
-                </div>
-
-                <div class="space-y-1">
-                    <p class="text-slate-500 uppercase text-[9px] font-bold">2. Prime majoritaire (50%)</p>
-                    <p id="logPrime" class="bg-slate-800/50 p-2 rounded text-white"></p>
-                </div>
-
-                <div class="space-y-1">
-                    <p class="text-slate-500 uppercase text-[9px] font-bold">3. Quotient (Calcul proportionnel)</p>
-                    <div class="bg-slate-800/50 p-2 rounded space-y-1">
-                        <p id="formulaQuotient" class="text-blue-300 font-bold"></p>
-                        <p id="logQuotient" class="text-white"></p>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center text-slate-100 bg-slate-800/40 p-2 rounded-lg border-l-2 border-blue-500">
+                        <span class="text-[10px]">SUFFRAGES EXPRIMÉS</span>
+                        <span id="valEx" class="text-lg font-bold">0</span>
                     </div>
-                </div>
 
-                <div class="space-y-1 pt-1">
-                    <p class="text-slate-500 uppercase text-[9px] font-bold">4. Attribution à la moyenne</p>
-                    <div id="logMoy" class="bg-slate-800/50 p-2 rounded text-white space-y-2 border-l-2 border-blue-500"></div>
+                    <div class="space-y-1">
+                        <p class="text-slate-500 uppercase text-[8px] font-bold tracking-widest">1. PRIME MAJORITAIRE (6 SIÈGES)</p>
+                        <p id="logPrime" class="text-white font-bold"></p>
+                    </div>
+
+                    <div class="space-y-1">
+                        <p class="text-slate-500 uppercase text-[8px] font-bold tracking-widest">2. QUOTIENT (5 PLACES)</p>
+                        <div class="bg-slate-800/40 p-2 rounded-lg space-y-1">
+                            <p id="formulaQuotient" class="text-blue-300 font-bold text-center"></p>
+                            <p id="logQuotient" class="text-white text-center border-t border-slate-700 mt-1 pt-1"></p>
+                        </div>
+                    </div>
+
+                    <div id="moySection" class="space-y-1">
+                        <p class="text-slate-500 uppercase text-[8px] font-bold tracking-widest">3. PLUS FORTE MOYENNE</p>
+                        <div id="logMoy" class="bg-slate-800/40 p-3 rounded-xl text-slate-200 space-y-3 border-l-2 border-emerald-500"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -120,60 +119,67 @@
             document.getElementById('valEx').innerText = ex;
             const winner = (vA >= vB) ? "A" : "B";
             
-            // État initial des sièges
+            // Prime
             let sA = (winner === "A") ? 6 : 0;
             let sB = (winner === "B") ? 6 : 0;
+            document.getElementById('logPrime').innerText = "• Liste " + winner + " en tête → 6 sièges";
 
-            document.getElementById('logPrime').innerText = "• Liste " + winner + " gagne : 6 sièges";
-
-            // Calcul du quotient
+            // Quotient (5 sièges à répartir)
             const quotient = ex / 5;
-            document.getElementById('formulaQuotient').innerText = ex + " voix / 5 places = " + quotient.toFixed(2);
+            document.getElementById('formulaQuotient').innerText = ex + " / 5 = " + quotient.toFixed(2);
             
-            let pA = Math.floor(vA / quotient);
-            let pB = Math.floor(vB / quotient);
+            // Calcul sièges proportionnels (sans la prime)
+            let propA = Math.floor(vA / quotient);
+            let propB = Math.floor(vB / quotient);
             
-            document.getElementById('logQuotient').innerText = "A: " + pA + " siège(s) | B: " + pB + " siège(s)";
+            document.getElementById('logQuotient').innerText = "A: " + propA + " siège(s) | B: " + propB + " siège(s)";
 
-            sA += pA;
-            sB += pB;
+            // Somme actuelle (Prime + Prop)
+            let currentA = sA + propA;
+            let currentB = sB + propB;
+            
+            // On suit séparément les sièges "proportionnels" pour le calcul de la moyenne
+            let pCountA = propA;
+            let pCountB = propB;
 
-            let reste = 11 - (sA + sB);
+            let reste = 11 - (currentA + currentB);
             const logMoy = document.getElementById('logMoy');
             logMoy.innerHTML = "";
 
             if (reste === 0) {
-                logMoy.innerHTML = "<p class='italic text-slate-500'>Aucun siège restant à la moyenne.</p>";
+                logMoy.innerHTML = "<p class='italic text-slate-500 text-center'>Aucun siège restant à la moyenne.</p>";
             }
 
             while (reste > 0) {
-                // Calcul de la moyenne : voix / (sièges déjà acquis + 1)
-                const mA = vA / (sA + 1);
-                const mB = vB / (sB + 1);
+                // Règle de la plus forte moyenne (Hautefort) : 
+                // On divise par (sièges proportionnels + 1). La prime n'est pas comptée dans le dénominateur.
+                const moyA = vA / (pCountA + 1);
+                const moyB = vB / (pCountB + 1);
                 
-                let details = "<div class='text-[10px] space-y-1'>";
-                details += "<p class='text-slate-400'>Calcul Moyenne :</p>";
-                details += "<p>A: " + vA + " / (" + sA + "+1) = <span class='text-blue-400'>" + mA.toFixed(2) + "</span></p>";
-                details += "<p>B: " + vB + " / (" + sB + "+1) = <span class='text-rose-400'>" + mB.toFixed(2) + "</span></p>";
+                let detail = "<div class='space-y-1 text-center'>";
+                detail += "<p class='text-blue-400 font-bold'>Siège n°" + (11 - reste + 1) + " :</p>";
+                detail += "<p>A: " + vA + " / (" + pCountA + "+1) = <span class='text-white'>" + moyA.toFixed(2) + "</span></p>";
+                detail += "<p>B: " + vB + " / (" + pCountB + "+1) = <span class='text-white'>" + moyB.toFixed(2) + "</span></p>";
                 
-                if (mA >= mB) {
-                    sA++;
-                    details += "<p class='font-bold text-green-400'>→ Liste A gagne le siège</p>";
+                if (moyA >= moyB) {
+                    currentA++;
+                    pCountA++;
+                    detail += "<p class='text-emerald-400 font-bold'>→ Attribué à la Liste A</p>";
                 } else {
-                    sB++;
-                    details += "<p class='font-bold text-green-400'>→ Liste B gagne le siège</p>";
+                    currentB++;
+                    pCountB++;
+                    detail += "<p class='text-emerald-400 font-bold'>→ Attribué à la Liste B</p>";
                 }
-                details += "</div>";
+                detail += "</div>";
                 
-                logMoy.innerHTML += details;
+                logMoy.innerHTML += detail;
                 reste--;
             }
 
-            document.getElementById('resA').innerText = sA;
-            document.getElementById('resB').innerText = sB;
+            document.getElementById('resA').innerText = currentA;
+            document.getElementById('resB').innerText = currentB;
             document.getElementById('resultats').classList.remove('hidden');
             
-            // Scroll automatique vers les résultats
             setTimeout(() => {
                 window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
             }, 100);
