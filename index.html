@@ -103,7 +103,7 @@
                         <p class="text-slate-100 font-bold mb-1 uppercase text-[9px] tracking-wider">2. Quotient électoral</p>
                         <div class="bg-slate-800/60 p-3 rounded-xl space-y-3 border-l-2 border-slate-600">
                             <p id="formulaQuotient" class="text-blue-300 font-bold text-center"></p>
-                            <div id="logQuotient" class="text-white pt-2 border-t border-slate-700/50 space-y-1 text-center"></div>
+                            <div id="logQuotient" class="text-white pt-2 border-t border-slate-700/50 space-y-1"></div>
                         </div>
                     </div>
 
@@ -111,13 +111,13 @@
                     <div id="moySection">
                         <p class="text-slate-100 font-bold mb-1 uppercase text-[9px] tracking-wider">3. Sièges restants (À la moyenne)</p>
                         <div class="bg-slate-800/60 p-3 rounded-xl text-slate-200 space-y-3 border-l-2 border-emerald-500 text-[10px]">
-                            <p class="text-slate-500 italic leading-tight">Note : La loi (Art. L262) exclut les 6 sièges de la prime pour ce calcul afin de ne pas favoriser deux fois le gagnant.</p>
+                            <p class="text-slate-500 italic leading-tight text-center">Calcul : Voix / (Sièges Prop. + 1)</p>
                             <div id="logMoy" class="space-y-4 pt-2 border-t border-slate-700/50"></div>
                         </div>
                     </div>
                 </div>
                 
-                <p class="text-[9px] text-slate-600 italic text-center pt-2">Méthode Hautefort (Jurisprudence Conseil d'État)</p>
+                <p class="text-[9px] text-slate-600 italic text-center pt-2">Méthode conforme à la notice préfectorale</p>
             </div>
         </div>
     </div>
@@ -142,7 +142,7 @@
             if (v > 0 && totalVoix !== ex) {
                 errorBox.classList.remove('hidden');
                 resultatsBox.classList.add('hidden');
-                document.getElementById('errorMsg').innerText = "Le total des voix (" + totalVoix + ") ne correspond pas aux exprimés (" + ex + "). Veuillez vérifier vos chiffres.";
+                document.getElementById('errorMsg').innerText = "Le total des voix (" + totalVoix + ") ne correspond pas aux exprimés (" + ex + ").";
                 return;
             } else {
                 errorBox.classList.add('hidden');
@@ -153,9 +153,9 @@
             const winner = (vA >= vB) ? "A" : "B";
             
             // 1. Prime majoritaire
-            let sA = (winner === "A") ? 6 : 0;
-            let sB = (winner === "B") ? 6 : 0;
-            document.getElementById('logPrime').innerText = "Liste " + winner + " en tête → +6 sièges d'office.";
+            let finalS_A = (winner === "A") ? 6 : 0;
+            let finalS_B = (winner === "B") ? 6 : 0;
+            document.getElementById('logPrime').innerText = "Liste " + winner + " gagne 6 sièges d'office.";
 
             // 2. Quotient
             const quotient = ex / 5;
@@ -165,40 +165,42 @@
             let propB = Math.floor(vB / quotient);
             
             document.getElementById('logQuotient').innerHTML = 
-                "<div class='flex justify-between'><span>A : " + vA + " / " + quotient.toFixed(2) + " =</span> <span class='font-bold text-blue-400'>" + propA + " sièges</span></div>" +
-                "<div class='flex justify-between'><span>B : " + vB + " / " + quotient.toFixed(2) + " =</span> <span class='font-bold text-rose-400'>" + propB + " sièges</span></div>";
+                "<div class='flex justify-between'><span>Liste A : " + vA + " / " + quotient.toFixed(2) + " = </span> <span class='font-bold text-blue-400'>" + propA + " siège(s)</span></div>" +
+                "<div class='flex justify-between'><span>Liste B : " + vB + " / " + quotient.toFixed(2) + " = </span> <span class='font-bold text-rose-400'>" + propB + " siège(s)</span></div>";
 
-            let finalA = sA + propA;
-            let finalB = sB + propB;
+            finalS_A += propA;
+            finalS_B += propB;
             
-            let pCountA = propA;
-            let pCountB = propB;
+            // On mémorise les sièges proportionnels pour le calcul de la moyenne (règle officielle)
+            let pA = propA;
+            let pB = propB;
 
-            let reste = 11 - (finalA + finalB);
+            let reste = 11 - (finalS_A + finalS_B);
             const logMoy = document.getElementById('logMoy');
             logMoy.innerHTML = "";
 
             if (reste === 0) {
-                logMoy.innerHTML = "<p class='italic text-slate-500 text-center'>Tous les sièges sont pourvus.</p>";
+                logMoy.innerHTML = "<p class='italic text-slate-500 text-center'>Tous les sièges sont déjà attribués.</p>";
             }
 
+            // On boucle pour chaque siège restant à attribuer
             while (reste > 0) {
-                const moyA = vA / (pCountA + 1);
-                const moyB = vB / (pCountB + 1);
+                const moyA = vA / (pA + 1);
+                const moyB = vB / (pB + 1);
                 
-                let detail = "<div class='space-y-1'>";
+                let detail = "<div class='space-y-1 text-center border-b border-slate-800/50 pb-2 mb-2 last:border-0'>";
                 detail += "<p class='text-blue-400 font-bold'>Détail siège n°" + (11 - reste + 1) + " :</p>";
-                detail += "<p class='flex justify-between'><span>Moy. A: " + vA + " / (" + pCountA + "+1) =</span> <span class='text-white font-bold'>" + moyA.toFixed(2) + "</span></p>";
-                detail += "<p class='flex justify-between'><span>Moy. B: " + vB + " / (" + pCountB + "+1) =</span> <span class='text-white font-bold'>" + moyB.toFixed(2) + "</span></p>";
+                detail += "<p>A: " + vA + " / (" + pA + "+1) = <span class='text-white font-bold'>" + moyA.toFixed(2) + "</span></p>";
+                detail += "<p>B: " + vB + " / (" + pB + "+1) = <span class='text-white font-bold'>" + moyB.toFixed(2) + "</span></p>";
                 
                 if (moyA >= moyB) {
-                    finalA++;
-                    pCountA++;
-                    detail += "<p class='text-emerald-400 font-bold text-center'>→ Attribué à la Liste A</p>";
+                    finalS_A++;
+                    pA++;
+                    detail += "<p class='text-emerald-400 font-bold mt-1'>→ Liste A gagne le siège</p>";
                 } else {
-                    finalB++;
-                    pCountB++;
-                    detail += "<p class='text-emerald-400 font-bold text-center'>→ Attribué à la Liste B</p>";
+                    finalS_B++;
+                    pB++;
+                    detail += "<p class='text-emerald-400 font-bold mt-1'>→ Liste B gagne le siège</p>";
                 }
                 detail += "</div>";
                 
@@ -206,8 +208,8 @@
                 reste--;
             }
 
-            document.getElementById('resA').innerText = finalA;
-            document.getElementById('resB').innerText = finalB;
+            document.getElementById('resA').innerText = finalS_A;
+            document.getElementById('resB').innerText = finalS_B;
             resultatsBox.classList.remove('hidden');
             
             setTimeout(() => {
